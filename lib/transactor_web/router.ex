@@ -8,6 +8,7 @@ defmodule TransactorWeb.Router do
     plug :put_root_layout, {TransactorWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug TransactorWeb.Plugs.Locale, "en"
   end
 
   pipeline :api do
@@ -18,6 +19,17 @@ defmodule TransactorWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/redirect_test", PageController, :redirect_test
+
+    get "/hello", HelloController, :index
+    get "/hello/:messenger", HelloController, :show
+    # resources "/users", UserController do
+    #   resources "/posts", PostsController, only: [:index, :show]
+    # end
+
+    # scope "/admin", TransactorWeb.Admin, as: :admin do
+    #   resources "/reviews", ReviewController
+    # end
   end
 
   # Other scopes may use custom stacks.
